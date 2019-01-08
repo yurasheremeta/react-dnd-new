@@ -7,6 +7,7 @@ import {
 } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import Box from './Box'
+import Change from './ChangeItems';
 
 const update = require('immutability-helper')
 
@@ -26,7 +27,7 @@ const boxTarget = {
 		if (!component) {
 			return
 		}
-		const item = monitor.getItem()
+		const item = monitor.getItem();
 		const delta = monitor.getDifferenceFromInitialOffset() as XYCoord
 		const workArea = document.querySelector("div.workspace");
 		const q = props.toolbarRef.current;
@@ -34,32 +35,37 @@ const boxTarget = {
 		const toolbarY = (q as any).getBoundingClientRect().y;
 		const workSpaceX = (workArea as any).getBoundingClientRect().x;
 		const workSpaceY = (workArea as any).getBoundingClientRect().y;
-
+		const workSpace = (workArea as any).getBoundingClientRect();
+		console.log("qqqq" , workSpace.left);
+		
 
 		if (props.boxes.hasOwnProperty(item.id)) {
 			const b = Math.round(workSpaceX - toolbarX);
-			const c = Math.round(workSpaceY - toolbarY);
-			const left = Math.round(item.left + delta.x);
-			console.log("workSpaceX", workSpaceX);
-			const top = Math.round(item.top + delta.y);
-			props.moveBox(item.id, left, top)
+			const left = Math.round(item.left + delta.x );
+			const top = Math.round(item.top + delta.y  );
+			if(left < 0 || top < 0){
+				return;
+			}
+			props.moveBox(item.id, left, top ,props.boxes.title)
 		} else {
 			const b = Math.round(workSpaceX - toolbarX);
 			const c = Math.round(workSpaceY - toolbarY);
 			const left = Math.round(item.left + delta.x - b);
-			console.log("workSpaceX", workSpaceX);
 			const top = Math.round(item.top + delta.y - c);
+			console.log("left" , left);
+			
+			if(left < 0 || top < 0){
+				return;
+			}
 			props.moveBox(item.id, left, top)
 		}
-
-
+		
 	},
 }
 export interface ContainerProps {
-	// hideSourceOnDrag: boolean,
 	toolbarRef: React.RefObject<HTMLDivElement>,
 	moveBox: Function,
-	boxes: any
+	boxes: any,
 
 }
 
@@ -90,9 +96,7 @@ class Container extends React.Component<
 	public render() {
 		const { connectDropTarget, boxes } = this.props
 
-		console.log("ssss", boxes);
-
-		// ref={(div) => {this.workspace = div}}
+		console.log("boxes on the workspace", boxes);
 		return connectDropTarget(
 
 			<div style={styles} className="workspace">
@@ -105,19 +109,15 @@ class Container extends React.Component<
 							left={left}
 							top={top}
 						>
-							{title}
+							<Change id={key}/>
 						</Box>
-
 					)
 				})}
+				
 			</div>
 			,
 		)
 	}
-
-	// public moveBox1(id: string, left: number, top: number) {
-	// 	this.props.moveBox(id, left, top);
-	// }
 }
 
 export default DropTarget<ContainerProps, ContainerCollectedProps>(

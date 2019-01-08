@@ -13,7 +13,8 @@ const style: React.CSSProperties = {
 const boxSource = {
 	beginDrag(props: BoxProps) {
 		const { id, left, top } = props
-		return { id, left, top }
+		
+		return {id, left, top }
 	},
 }
 

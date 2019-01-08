@@ -48,15 +48,17 @@ export default class DragAroundNaive extends React.Component<
 		boxes: {},
 
 	}
-	public moveBox(id: string, left: number, top: number) {
-		this.setState(state => {
-			if (state.boxes[id]) {
-				state = { boxes: { ...state.boxes, [id]: { ...state.boxes[id], left, top } } };
+	public moveBox(id: string, left: number, top: number ) {
+
+		this.setState(prevState => {
+			if (prevState.boxes[id]) {
+				return { boxes: { ...prevState.boxes, [id]: { ...prevState.boxes[id], left, top } } };
 			} else {
-				state = { boxes: { ...state.boxes, [id]: { left, top, title: id} } };
+				
+				return { boxes: { ...prevState.boxes, [id]: { left, top, title: id } } };
 			}
-			console.log(state);
-			return state;
+		
+		
 		})
 	}
 	
