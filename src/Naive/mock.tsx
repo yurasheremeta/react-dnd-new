@@ -1,18 +1,20 @@
 export const box: any = {
-    '#1' :{
+    'a' :{
         left: 0,
         top:0,
         title: "Input"
     },
-    "#2": {
+    "b": {
         left: 0,
         top:40,
-        title: "Button"
+        title: "TextArea"
     },
-    "#3": {
+    "c": {
         left: 0,
         top:80,
         title: "RadioButton"
     },
+   
+   
    
 }

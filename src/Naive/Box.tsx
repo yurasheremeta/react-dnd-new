@@ -13,7 +13,8 @@ const style: React.CSSProperties = {
 const boxSource = {
 	beginDrag(props: BoxProps) {
 		const { id, left, top } = props
-		
+		const	input = document.getElementById('#text');
+        console.log("Toolbar",input);
 		return {id, left, top }
 	},
 }
@@ -23,12 +24,14 @@ export interface BoxProps {
 	left: number
 	top: number
 	hideSourceOnDrag?: boolean
+	boxRef?: any
 
 }
 
 interface BoxCollectedProps {
 	connectDragSource: ConnectDragSource
 	isDragging?: boolean
+	
 }
 
 class Box extends React.Component<BoxProps & BoxCollectedProps> {
@@ -40,7 +43,9 @@ class Box extends React.Component<BoxProps & BoxCollectedProps> {
 			connectDragSource,
 			isDragging,
 			children,
-			
+			boxRef,
+			id
+		
 		} = this.props
 		if (isDragging && hideSourceOnDrag) {
 			return null
@@ -52,7 +57,7 @@ class Box extends React.Component<BoxProps & BoxCollectedProps> {
 			cStyle.position = 'relative';
 		}
 		return connectDragSource(
-			<div style={{ ...style, left, top }}>
+			<div style={{ ...style, left, top }} ref={boxRef} id={id} >
 			{children}
 			</div>
 		)
