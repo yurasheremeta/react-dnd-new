@@ -48,7 +48,7 @@ const boxTarget = {
 		if (props.boxes.hasOwnProperty(item.id)) {
 			const left = Math.round(item.left + delta.x);
 			const top = Math.round(item.top + delta.y);
-			if (left < 0 || top < 0 || top > d || left > aa) {
+			if (left < 0 || top < 0 || top > aa || left > d) {
 				return;
 			}
 
@@ -62,7 +62,7 @@ const boxTarget = {
 			console.log("top", top);
 			console.log("boxDom.x", boxDom.x);
 
-			if (left < 0 || top < 0 || top > aa || left >d) {
+			if (left < 0 || top < 0 || top > aa || left > d) {
 				return;
 			}
 
