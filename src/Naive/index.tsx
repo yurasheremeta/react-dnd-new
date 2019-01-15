@@ -2,6 +2,7 @@ import * as React from 'react'
 import Container from './Container'
 import Box from './Box';
 import { Toolbar } from './Toolbar';
+import { string } from 'prop-types';
 
 
 export interface ContainerState {
@@ -12,6 +13,7 @@ export interface ContainerState {
 export interface ContainerProps {
 	moveBox: Function,
 	setValueOf: Function;
+	handleValueChange: Function;
 }
 const styles: React.CSSProperties = {
 	display: 'flex',
@@ -35,15 +37,38 @@ export default class DragAroundNaive extends React.Component<
 		boxes: {},
 
 	}
-	public moveBox(id: string, left: number, top: number ) {
+
+	handleValueChange = (id: string) => {
+		return (event: any) => {
+			console.log("eve" , event);
+			
+			const value = event.target.value;
+			console.log("val", value);
+			
+			this.setState(prevState  => {
+				console.log("prev", prevState);
+				
+				return { boxes: { ...prevState.boxes, [id]: { ...prevState.boxes[id], value: value } } };
+			}, () => {
+				console.log("stet", this.state)
+
+			})
+
+
+		}
+		;
+		
+	}
+
+	public moveBox(id: string, left: number, top: number , value: string) {
 	
 		this.setState(prevState => {
 			if (prevState.boxes[id]) {
 			
-				return { boxes: { ...prevState.boxes, [id]: { ...prevState.boxes[id], left, top , value: '' } } };
+				return { boxes: { ...prevState.boxes, [id]: { ...prevState.boxes[id], left, top , value: value  } } };
 			} else {
 				
-				return { boxes: { ...prevState.boxes, [id]: { left, top, title: id , value: ''} } };
+				return { boxes: { ...prevState.boxes, [id]: { left, top, title: id , value: value || ''} } };
 			}
 		
 			
@@ -57,7 +82,7 @@ export default class DragAroundNaive extends React.Component<
 				<div style={styles}>
 					<p>ITEMS</p>
 					<Toolbar toolbarRef={this.toolbar} />
-					<Container boxes={this.state.boxes} toolbarRef={this.toolbar} moveBox={this.moveBox}/>
+					<Container boxes={this.state.boxes} toolbarRef={this.toolbar} moveBox={this.moveBox} handleValueChange={this.handleValueChange}/>
 				</div>
 				<div>
 				</div>
