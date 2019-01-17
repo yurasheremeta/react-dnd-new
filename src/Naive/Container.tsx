@@ -11,10 +11,7 @@ import Input from './Input';
 import TextArea from './TextArea';
 import RadioButtonGroup from './RadioButtonGroup';
 import { BoxType } from './index';
-import { HandleValueChangeType , MoveBoxType } from './index';
-
-const update = require('immutability-helper')
-
+import { HandleValueChangeType, MoveBoxType } from './index';
 
 const styles: React.CSSProperties = {
 	width: 300,
@@ -22,7 +19,6 @@ const styles: React.CSSProperties = {
 	border: '1px solid black',
 	position: 'relative'
 }
-
 
 const divWorkspace = "div.workspace";
 const workspace = "workspace";
@@ -35,7 +31,7 @@ const boxTarget = {
 		if (!component) {
 			return
 		}
-	
+
 		const item = monitor.getItem();
 		const delta = monitor.getDifferenceFromInitialOffset() as XYCoord
 		const workArea = document.querySelector(divWorkspace) as HTMLDivElement;
@@ -46,25 +42,25 @@ const boxTarget = {
 		const boxDom = box.getBoundingClientRect() as DOMRect;
 		const d = Math.round(boxDom.x + boxDom.width);
 		const aa = Math.round(boxDom.y + boxDom.height);
-		
+
 		if (props.boxes.hasOwnProperty(item.id)) {
 			const left = Math.round(item.left + delta.x);
 			const top = Math.round(item.top + delta.y);
-			if (left < 0 || top < 0 ) {
+			if (left < 0 || top < 0|| left > aa || top > d) {
 				return;
 			}
-
-			props.moveBox(item.id, left, top, " ")
+			props.moveBox(item.id, left, top, item.value)
+			
 		} else {
 			const b = Math.round(workSpaceX - props.toolbarPositionX);
 			const c = Math.round(workSpaceY - props.toolbarPositionY);
 			const left = Math.round(item.left + delta.x - b);
 			const top = Math.round(item.top + delta.y - c);
 
-			if (left < 0 || top < 0 ) {
+			if (left < 0 || top < 0 || left > aa || top > d) {
 				return;
 			}
-			props.moveBox(item.id, left, top , " ");	
+			props.moveBox(item.id, left, top ,item.value);
 		}
 	},
 }
@@ -74,7 +70,6 @@ export interface ContainerProps {
 	boxes: BoxType,
 	toolbarPositionX: number;
 	toolbarPositionY: number;
-
 }
 
 interface ContainerCollectedProps {
@@ -84,7 +79,7 @@ interface ContainerCollectedProps {
 class Container extends React.Component<
 	ContainerProps & ContainerCollectedProps
 	> {
-	 renderItems = (id: string, value: string) => {
+	renderItems = (id: string, value: string) => {
 		switch (id) {
 			case "a":
 				return (
@@ -96,12 +91,7 @@ class Container extends React.Component<
 				)
 			case "c":
 				return (
-					<form >
-						<input value="1"  name= "radio" onChange={this.props.handleValueChange(id)} type="radio"/>
-						<input value="2" name="radio" onChange={this.props.handleValueChange(id)} type="radio" />
-						<input value="3" name="radio" onChange={this.props.handleValueChange(id)} type="radio" />
-					</form>
-					// <RadioButtonGroup value={value} onChange={this.props.handleValueChange(id)}/>
+					 <RadioButtonGroup  onChange={this.props.handleValueChange(id)}/>
 				)
 		}
 	}
@@ -118,6 +108,7 @@ class Container extends React.Component<
 								id={key}
 								left={left}
 								top={top}
+								value={value}
 							>
 								{
 									this.renderItems(key, value)

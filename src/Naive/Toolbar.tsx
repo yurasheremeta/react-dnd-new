@@ -54,13 +54,14 @@ export class Toolbar extends React.Component<ToolbarProps, BoxProps> {
 
             <div style={styles} ref={this.toolbarRef}>
                 {Object.keys(box).map(key => {
-                    const { left, top, title, } = box[key];
+                    const { left, top, title, value } = box[key];
                     return (
                         <Box
                             key={key}
                             id={key}
                             left={left}
                             top={top}
+                            value={value}
                         >
                             {title}
                         </Box>

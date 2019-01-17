@@ -1,17 +1,15 @@
 import * as React from 'react'
 import Container from './Container'
-import Box from './Box';
 import { Toolbar } from './Toolbar';
-import { string } from 'prop-types';
 
-export  interface BoxType { 
-	 [key: string]: { top: number; left: number, title: string, value: string } ,
+export interface BoxType {
+	[key: string]: { top: number; left: number, title: string, value: string },
 }
-export type HandleValueChangeType = (id : string) => (event : any)  => void  
+export type HandleValueChangeType = (id: string) => (event: any) => void
 
-export type MoveBoxType = (id: string, left: number, top: number, value: string) =>  void;
+export type MoveBoxType = (id: string, left: number, top: number, value: string) => void;
 
-export type SetPositionType =  (toolbarpositionX: number, toolbarpositionY: number) => void;
+export type SetPositionType = (toolbarpositionX: number, toolbarpositionY: number) => void;
 
 export interface ContainerState {
 	boxes: BoxType,
@@ -50,8 +48,6 @@ export default class DragAroundNaive extends React.Component<
 			const value = event.target.value;
 			this.setState(prevState => {
 				return { boxes: { ...prevState.boxes, [id]: { ...prevState.boxes[id], value: value } } };
-			}, () => {
-				console.log("stet", this.state)
 			})
 		};
 	}
@@ -63,7 +59,6 @@ export default class DragAroundNaive extends React.Component<
 		})
 	}
 	moveBox = (id: string, left: number, top: number, value: string) => {
-
 		this.setState(prevState => {
 			if (prevState.boxes[id]) {
 				return { boxes: { ...prevState.boxes, [id]: { ...prevState.boxes[id], left, top, value: value } } };
