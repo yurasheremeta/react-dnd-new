@@ -12,7 +12,9 @@ const styles: React.CSSProperties = {
 }
 
 interface ToolbarProps {
-    toolbarRef: any
+    toolbarPositionX: number;
+    toolbarPositionY: number;
+    setPosition : Function,
 }
 
 export interface BoxesProps {
@@ -29,19 +31,30 @@ interface BoxProps {
 
 
 export class Toolbar extends React.Component<ToolbarProps, BoxProps> {
-    
-    render() {
-        const {
-            toolbarRef,
 
-        } = this.props;
-      
+
+    toolbarRef:React.RefObject<HTMLDivElement>;
+    constructor(props: ToolbarProps){
+        super(props);
+        this.toolbarRef = React.createRef();
+    }
+
+    componentDidMount = () => {
+       
+       setTimeout(() => {
+        const toolbar = this.toolbarRef.current;
+       const { x, y } = (toolbar as any).getBoundingClientRect();
+       this.props.setPosition(x, y);
+       })
+    }
+    render() {
+    
+
         return (
 
-            <div style={styles} ref={toolbarRef}>
+            <div style={styles} ref={this.toolbarRef}>
                 {Object.keys(box).map(key => {
                     const { left, top, title, } = box[key];
-                  
                     return (
                         <Box
                             key={key}
