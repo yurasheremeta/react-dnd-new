@@ -4,23 +4,30 @@ import Box from './Box';
 import { Toolbar } from './Toolbar';
 import { string } from 'prop-types';
 
+export  interface BoxType { 
+	 [key: string]: { top: number; left: number, title: string, value: string } ,
+}
+export type HandleValueChangeType = (id : string) => (event : any)  => void  
+
+export type MoveBoxType = (id: string, left: number, top: number, value: string) =>  void;
+
+export type SetPositionType =  (toolbarpositionX: number, toolbarpositionY: number) => void;
 
 export interface ContainerState {
-	boxes: { [key: string]: { top: number; left: number, title: string, value: string } },
+	boxes: BoxType,
 	toolbarpositionX: number,
 	toolbarpositionY: number,
-
 }
 
 export interface ContainerProps {
-	moveBox: Function,
-	handleValueChange: Function;
+	moveBox: MoveBoxType,
+	handleValueChange: HandleValueChangeType;
 }
+
 const styles: React.CSSProperties = {
 	display: 'flex',
 	justifyContent: 'center',
 	flexWrap: 'wrap'
-
 }
 
 export default class DragAroundNaive extends React.Component<
@@ -46,9 +53,7 @@ export default class DragAroundNaive extends React.Component<
 			}, () => {
 				console.log("stet", this.state)
 			})
-		}
-			;
-
+		};
 	}
 
 	setPosition = (toolbarpositionX: number, toolbarpositionY: number) => {

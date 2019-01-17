@@ -7,6 +7,11 @@ import {
 } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import Box from './Box'
+import Input from './Input';
+import TextArea from './TextArea';
+import RadioButtonGroup from './RadioButtonGroup';
+import { BoxType } from './index';
+import { HandleValueChangeType , MoveBoxType } from './index';
 
 const update = require('immutability-helper')
 
@@ -33,11 +38,12 @@ const boxTarget = {
 	
 		const item = monitor.getItem();
 		const delta = monitor.getDifferenceFromInitialOffset() as XYCoord
-		const workArea = document.querySelector(divWorkspace);
-		const workSpaceX = (workArea as any).getBoundingClientRect().x;
-		const workSpaceY = (workArea as any).getBoundingClientRect().y;
-		const box = document.querySelector("#" + item.id);
-		const boxDom = (box as any).getBoundingClientRect();
+		const workArea = document.querySelector(divWorkspace) as HTMLDivElement;
+		const workSpace = workArea.getBoundingClientRect() as DOMRect;
+		const workSpaceX = workSpace.x;
+		const workSpaceY = workSpace.y;
+		const box = document.querySelector("#" + item.id) as HTMLDivElement;
+		const boxDom = box.getBoundingClientRect() as DOMRect;
 		const d = Math.round(boxDom.x + boxDom.width);
 		const aa = Math.round(boxDom.y + boxDom.height);
 		
@@ -48,7 +54,7 @@ const boxTarget = {
 				return;
 			}
 
-			props.moveBox(item.id, left, top)
+			props.moveBox(item.id, left, top, " ")
 		} else {
 			const b = Math.round(workSpaceX - props.toolbarPositionX);
 			const c = Math.round(workSpaceY - props.toolbarPositionY);
@@ -58,14 +64,14 @@ const boxTarget = {
 			if (left < 0 || top < 0 ) {
 				return;
 			}
-			props.moveBox(item.id, left, top);	
+			props.moveBox(item.id, left, top , " ");	
 		}
 	},
 }
 export interface ContainerProps {
-	moveBox: Function,
-	handleValueChange: Function;
-	boxes: any,
+	moveBox: MoveBoxType,
+	handleValueChange: HandleValueChangeType;
+	boxes: BoxType,
 	toolbarPositionX: number;
 	toolbarPositionY: number;
 
@@ -78,15 +84,15 @@ interface ContainerCollectedProps {
 class Container extends React.Component<
 	ContainerProps & ContainerCollectedProps
 	> {
-	 renderItems = (id: string, value: any) => {
+	 renderItems = (id: string, value: string) => {
 		switch (id) {
 			case "a":
 				return (
-					<input type="text" value={value} onChange={this.props.handleValueChange(id)} />
+					<Input value={value} onChange={this.props.handleValueChange(id)} />
 				)
 			case "b":
 				return (
-					<textarea value={value} onChange={this.props.handleValueChange(id)} />
+					<TextArea value={value} onChange={this.props.handleValueChange(id)} />
 				)
 			case "c":
 				return (
@@ -95,6 +101,7 @@ class Container extends React.Component<
 						<input value="2" name="radio" onChange={this.props.handleValueChange(id)} type="radio" />
 						<input value="3" name="radio" onChange={this.props.handleValueChange(id)} type="radio" />
 					</form>
+					// <RadioButtonGroup value={value} onChange={this.props.handleValueChange(id)}/>
 				)
 		}
 	}

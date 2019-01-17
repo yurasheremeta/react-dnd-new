@@ -2,6 +2,8 @@ import * as React from 'react';
 import Box from './Box';
 import { number } from 'prop-types';
 import { box } from './mock';
+import { SetPositionType } from './index';
+import { BoxType } from './index';
 
 const styles: React.CSSProperties = {
     width: 300,
@@ -14,12 +16,11 @@ const styles: React.CSSProperties = {
 interface ToolbarProps {
     toolbarPositionX: number;
     toolbarPositionY: number;
-    setPosition : Function,
+    setPosition : SetPositionType,
 }
 
 export interface BoxesProps {
-    boxes: { [key: string]: { left: number, top: number, title: string } }
-
+    boxes: BoxType;
 }
 
 interface BoxProps {
@@ -28,7 +29,6 @@ interface BoxProps {
     top: number,
     title: string
 }
-
 
 export class Toolbar extends React.Component<ToolbarProps, BoxProps> {
 
@@ -42,8 +42,8 @@ export class Toolbar extends React.Component<ToolbarProps, BoxProps> {
     componentDidMount = () => {
        
        setTimeout(() => {
-        const toolbar = this.toolbarRef.current;
-       const { x, y } = (toolbar as any).getBoundingClientRect();
+        const toolbar = this.toolbarRef.current as HTMLDivElement;
+       const { x, y } = toolbar.getBoundingClientRect() as DOMRect;
        this.props.setPosition(x, y);
        })
     }
