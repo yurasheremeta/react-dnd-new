@@ -72,7 +72,6 @@ export default class DragAroundNaive extends React.Component<
 		return (
 			<div >
 				<div style={styles}>
-					<p>ITEMS</p>
 					<Toolbar
 						toolbarPositionX={this.state.toolbarpositionX}
 						toolbarPositionY={this.state.toolbarpositionY}

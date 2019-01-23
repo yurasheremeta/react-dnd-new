@@ -14,8 +14,8 @@ import { BoxType } from './index';
 import { HandleValueChangeType, MoveBoxType } from './index';
 
 const styles: React.CSSProperties = {
-	width: 300,
-	height: 300,
+	width: 500,
+	height: 500,
 	border: '1px solid black',
 	position: 'relative'
 }
@@ -46,7 +46,7 @@ const boxTarget = {
 		if (props.boxes.hasOwnProperty(item.id)) {
 			const left = Math.round(item.left + delta.x);
 			const top = Math.round(item.top + delta.y);
-			if (left < 0 || top < 0|| left > aa || top > d) {
+			if (left < 0 || top < 0) {
 				return;
 			}
 			props.moveBox(item.id, left, top, item.value)
@@ -57,7 +57,7 @@ const boxTarget = {
 			const left = Math.round(item.left + delta.x - b);
 			const top = Math.round(item.top + delta.y - c);
 
-			if (left < 0 || top < 0 || left > aa || top > d) {
+			if (left < 0 || top < 0 ) {
 				return;
 			}
 			props.moveBox(item.id, left, top ,item.value);

@@ -6,11 +6,12 @@ import { SetPositionType } from './index';
 import { BoxType } from './index';
 
 const styles: React.CSSProperties = {
-    width: 300,
-    height: 300,
+    width: 100,
+    height: 500,
     border: '1px solid black',
-    position: 'relative',
-    margin: 'auto'
+     position: 'relative',
+    
+
 }
 
 interface ToolbarProps {
@@ -40,7 +41,6 @@ export class Toolbar extends React.Component<ToolbarProps, BoxProps> {
     }
 
     componentDidMount = () => {
-       
        setTimeout(() => {
         const toolbar = this.toolbarRef.current as HTMLDivElement;
        const { x, y } = toolbar.getBoundingClientRect() as DOMRect;
@@ -48,10 +48,7 @@ export class Toolbar extends React.Component<ToolbarProps, BoxProps> {
        })
     }
     render() {
-    
-
         return (
-
             <div style={styles} ref={this.toolbarRef}>
                 {Object.keys(box).map(key => {
                     const { left, top, title, value } = box[key];
@@ -72,3 +69,5 @@ export class Toolbar extends React.Component<ToolbarProps, BoxProps> {
         )
     }
 }
+
+export default Toolbar;

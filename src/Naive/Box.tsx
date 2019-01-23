@@ -4,10 +4,12 @@ import ItemTypes from './ItemTypes'
 
 const style: React.CSSProperties = {
 	position: 'absolute',
-	border: '1px dashed gray',
+	// border: '1px dashed gray',
 	backgroundColor: 'white',
-	padding: '0.5rem 1rem',
+	// padding: '0.5rem 1rem',
+	padding: '3px',
 	cursor: 'move',
+
 }
 
 const boxSource = {
@@ -22,7 +24,6 @@ export interface BoxProps {
 	left: number
 	top: number
 	hideSourceOnDrag?: boolean
-	boxRef?: any,
 	value: string
 
 }
@@ -30,7 +31,6 @@ export interface BoxProps {
 interface BoxCollectedProps {
 	connectDragSource: ConnectDragSource
 	isDragging?: boolean
-
 }
 
 class Box extends React.Component<BoxProps & BoxCollectedProps> {
@@ -42,7 +42,6 @@ class Box extends React.Component<BoxProps & BoxCollectedProps> {
 			connectDragSource,
 			isDragging,
 			children,
-			boxRef,
 			id
 
 		} = this.props
@@ -56,7 +55,7 @@ class Box extends React.Component<BoxProps & BoxCollectedProps> {
 			cStyle.position = 'relative';
 		}
 		return connectDragSource(
-			<div style={{ ...style, left, top }} ref={boxRef} id={id} >
+			<div style={{ ...style, left, top }} id={id} className="boxDiv">
 				{children}
 			</div>
 		)
