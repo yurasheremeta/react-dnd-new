@@ -43,7 +43,6 @@ class Box extends React.Component<BoxProps & BoxCollectedProps> {
 			isDragging,
 			children,
 			id
-
 		} = this.props
 		if (isDragging && hideSourceOnDrag) {
 			return null

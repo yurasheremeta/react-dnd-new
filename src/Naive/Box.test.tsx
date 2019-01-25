@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { shallow, mount } from 'enzyme';
+import renderer from 'react-test-renderer';
 import Box from './Box';
 import 'jsdom-global/register';
 
@@ -11,10 +12,9 @@ describe('Box tests' , () => {
         value: "Hello world"
     }
 
-    it('Find Boxes' , () => {
-        const wrapper = shallow(<Box {...props}/>)
+    it('render correctly Box component' , () => {
+        const wrapper = renderer.create(<Box {...props}/>).toJSON();
         expect(wrapper).toMatchSnapshot();
-        expect(wrapper.find('div')).toBeDefined();
     })
 
     it('Render box props' , () => {
@@ -42,9 +42,27 @@ describe('Box tests' , () => {
         expect(wrapper.prop("top")).toEqual(60);
         expect(wrapper.prop("value")).toEqual("Hell Yeah!");
     })
-    
-    // it('should display items, by default, in a text template (span element)', function() {
-    //     var container = mount(<Box {...props}/>);
-    //     expect(container.getDOMNode().textContent).toBe(randomWords.join(''));
-    //   });
+
+    it('Check if box is draging', () => {
+        const boxProps = {
+            isDraging : true
+        }
+        const wrapper = mount(<Box {...props} {...boxProps}/>)
+        expect(wrapper.prop("isDraging")).toBeTruthy();
+    })
+
+    it('Check reletive position' , () => {
+        const style: React.CSSProperties = {
+            position: 'relative'
+        }
+        const defaultProps = {
+            left : 0,
+            top: 0,
+        }
+        const cStyle = { ...style}
+        const wrapper = mount(<Box id="a" value = {"Hello"} {...defaultProps}/>)
+        expect(wrapper.prop("left")).toEqual(0);
+        expect(wrapper.prop("top")).toEqual(0);
+        expect(cStyle.position).toEqual("relative");
+    })
 })

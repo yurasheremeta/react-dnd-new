@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioButton tests Render correct RadioButton group 1`] = `
+<form>
+  <input
+    name="radio"
+    onChange={[Function]}
+    type="radio"
+    value="1"
+  />
+  <input
+    name="radio"
+    onChange={[Function]}
+    type="radio"
+    value="2"
+  />
+  <input
+    name="radio"
+    onChange={[Function]}
+    type="radio"
+    value="3"
+  />
+</form>
+`;

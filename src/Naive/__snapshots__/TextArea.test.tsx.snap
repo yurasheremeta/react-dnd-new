@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea tests Render correctly TextArea 1`] = `
+<textarea
+  onChange={[Function]}
+  value="aaaaa"
+/>
+`;

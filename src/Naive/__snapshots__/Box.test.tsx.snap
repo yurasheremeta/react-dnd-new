@@ -5,3 +5,5 @@ exports[`Box tests Find Boxes 1`] = `
   <Component />
 </ContextConsumer>
 `;
+
+exports[`Box tests render correctly Box component 1`] = `null`;

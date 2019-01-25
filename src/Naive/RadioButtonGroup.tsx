@@ -14,5 +14,4 @@ class RadioButtonGroup extends React.Component<RadioButtonGroupProps>{
         )
     }
 }
-
 export default RadioButtonGroup;
