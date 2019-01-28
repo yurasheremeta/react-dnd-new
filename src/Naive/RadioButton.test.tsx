@@ -9,6 +9,4 @@ describe('RadioButton tests' , () => {
         const wrapper = renderer.create(<RadioButtonGroup  onChange={() => {}}/>).toJSON();
         expect(wrapper).toMatchSnapshot();
     })
-
-
 })

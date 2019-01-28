@@ -12,6 +12,12 @@ import TextArea from './TextArea';
 import RadioButtonGroup from './RadioButtonGroup';
 import { BoxType } from './index';
 import { HandleValueChangeType, MoveBoxType } from './index';
+import { 
+	getSize,
+	getLeftPosition,
+	getTopPosition,
+	checkIfItemInWorkspace
+} from './utils';
 
 const styles: React.CSSProperties = {
 	width: 500,
@@ -20,8 +26,8 @@ const styles: React.CSSProperties = {
 	position: 'relative'
 }
 
-const divWorkspace = "div.workspace";
 const workspace = "workspace";
+
 const boxTarget = {
 	drop(
 		props: ContainerProps,
@@ -31,35 +37,21 @@ const boxTarget = {
 		if (!component) {
 			return
 		}
-
 		const item = monitor.getItem();
 		const delta = monitor.getDifferenceFromInitialOffset() as XYCoord
-		const workArea = document.querySelector(divWorkspace) as HTMLDivElement;
-		const workSpace = workArea.getBoundingClientRect() as DOMRect;
-		const workSpaceX = workSpace.x;
-		const workSpaceY = workSpace.y;
-		const box = document.querySelector("#" + item.id) as HTMLDivElement;
-		const boxDom = box.getBoundingClientRect() as DOMRect;
-		const d = Math.round(boxDom.x + boxDom.width);
-		const aa = Math.round(boxDom.y + boxDom.height);
-
+		const workspace = getSize("div.workspace");
+		const workSpaceX = workspace.x;
+		
 		if (props.boxes.hasOwnProperty(item.id)) {
-			const left = Math.round(item.left + delta.x);
-			const top = Math.round(item.top + delta.y);
-			if (left < 0 || top < 0) {
-				return;
-			}
+			const left = getLeftPosition(item , delta );
+			const top = getTopPosition(item , delta);
+			checkIfItemInWorkspace(left, top );
 			props.moveBox(item.id, left, top, item.value)
-			
 		} else {
-			const b = Math.round(workSpaceX - props.toolbarPositionX);
-			const c = Math.round(workSpaceY - props.toolbarPositionY);
-			const left = Math.round(item.left + delta.x - b);
-			const top = Math.round(item.top + delta.y - c);
-
-			if (left < 0 || top < 0 ) {
-				return;
-			}
+			const widthBetweenWorkspaceAndToolbar = Math.round(workSpaceX - props.toolbarPositionX);
+			const left = Math.round(item.left + delta.x - widthBetweenWorkspaceAndToolbar);
+			const top = Math.round(item.top + delta.y );
+			checkIfItemInWorkspace(left , top);
 			props.moveBox(item.id, left, top ,item.value);
 		}
 	},
