@@ -7,7 +7,7 @@ import 'jsdom-global/register';
 describe('Input tests', () => {
 
     it('Render correctly input' , () => {
-        const wrapper = renderer.create(<Input value={"aaaaa"} onChange={() => {}}/>).toJSON();
+        const wrapper = shallow(<Input value={"aaaaa"} onChange={() => {}}/>);
         expect(wrapper).toMatchSnapshot();
     })
 

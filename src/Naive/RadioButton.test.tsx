@@ -6,7 +6,7 @@ import 'jsdom-global/register';
 
 describe('RadioButton tests' , () => {
     it('Render correct RadioButton group' , () => {
-        const wrapper = renderer.create(<RadioButtonGroup  onChange={() => {}}/>).toJSON();
+        const wrapper =shallow(<RadioButtonGroup  onChange={() => {}}/>);
         expect(wrapper).toMatchSnapshot();
     })
 })

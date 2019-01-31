@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { shallow, mount} from 'enzyme';
-import renderer from 'react-test-renderer';
 import TextArea from './TextArea';
 import 'jsdom-global/register';
 
 describe('TextArea tests', () => {
 
     it('Render correctly TextArea' , () => {
-        const wrapper = renderer.create(<TextArea value={"aaaaa"} onChange={() => {}}/>).toJSON();
+        const wrapper = shallow(<TextArea value={"aaaaa"} onChange={() => {}}/>);
         expect(wrapper).toMatchSnapshot();
     })
 

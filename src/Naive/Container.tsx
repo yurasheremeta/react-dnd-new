@@ -18,6 +18,7 @@ import {
 	getTopPosition,
 	checkIfItemInWorkspace
 } from './utils';
+import MyPDFeReader from './MyPDFReader';
 
 const styles: React.CSSProperties = {
 	width: 500,
@@ -71,6 +72,7 @@ interface ContainerCollectedProps {
 class Container extends React.Component<
 	ContainerProps & ContainerCollectedProps
 	> {
+	
 	renderItems = (id: string, value: string) => {
 		switch (id) {
 			case "a":
@@ -92,6 +94,7 @@ class Container extends React.Component<
 		return connectDropTarget(
 			<div>
 				<div style={styles} className={workspace}>
+					<MyPDFeReader/>
 					{Object.keys(boxes).map(key => {
 						const { left, top, value } = boxes[key];
 						return (
@@ -110,6 +113,7 @@ class Container extends React.Component<
 					})}
 				</div>
 				<button onClick={() => console.log(this.props.boxes)}>submit</button>
+				<button>Upload Doc</button>
 			</div>
 		)
 	}

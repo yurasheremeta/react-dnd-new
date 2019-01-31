@@ -13,7 +13,7 @@ describe('Box tests' , () => {
     }
 
     it('render correctly Box component' , () => {
-        const wrapper = renderer.create(<Box {...props}/>).toJSON();
+        const wrapper = shallow(<Box {...props}/>);
         expect(wrapper).toMatchSnapshot();
     })
 
